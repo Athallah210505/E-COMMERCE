@@ -1,9 +1,95 @@
-<h1>Mental Health Tracker</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
 
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #F1D068;
+        }
 
-<h5>NPM: </h5>
-<p>{{ npm }}<p>
-<h5>Name: </h5>
-<p>{{ name }}<p>
-<h5>Class: </h5>
-<p>{{ class }}<p>
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 45px;
+            margin-left: 10%;
+            margin-top: -200px;
+        }
+
+        h5 {
+            margin: 0;
+            font-size: 25px;
+        }
+        p{
+            margin: 0;
+            font-size: 16px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+
+        }
+
+        .box {
+            background-color: #F9F9F7;
+            padding: 100px;
+            border-radius: 20px;
+            width: 600px;
+            margin-left: 21%;
+            margin-top: 10%;
+        }
+
+        .container {
+            background-color: #F1D068;
+            padding: 40px;
+            margin-top: 100px;
+            border-radius: 20px;
+            margin-left: 5%;
+
+        }
+
+        .submit-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .submit-button button {
+            width: 200px;
+            padding: 10px;
+            background-color: #2e4d3b;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .submit-button button:hover {
+            background-color: #1f3428;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h1>Welcome! Toko Emas86</h1>
+        <div class="container">
+            <h5>Name:</h5>
+            <p>{{ gold_name }}</p>
+            <h5>Description:</h5>
+            <p>{{ description }}</p>
+            <h5>Quantity:</h5>
+            <p>{{ quantity }}</p>
+            <h5>Price:</h5>
+            <p>{{ price }}</p>
+        </div>
+        <div class="submit-button">
+            <button type="button">Submit</button>
+        </div>
+    </div>
+
+</body>
+</html>

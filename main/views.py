@@ -3,9 +3,10 @@ from django.shortcuts import render
 # Create your views here.
 def show_main(request):
     context = {
-        'npm' : '2306123456',
-        'name': 'Pak Bepe',
-        'class': 'PBP E'
+        'gold_name' : 'Pure Gold',
+        'description': 'Pure Gold Bar with a weight of 1 kg',
+        'quantity': '1',
+        'price' : 'Rp.10.000.000'
     }
 
     return render(request, "main.html", context)
