@@ -12,6 +12,7 @@
 - saya juga melakukan routing pada urls.py agar dapat terintegrasi dengan main saya
 - dan yang terkahir saya melakukan commit pada github dan juga deployment website saya pada PWS
 2. link untuk bangan : https://www.canva.com/design/DAGQUyJfBOE/Gn-rtXkHpZ6i-6RMrRyP3Q/edit?utm_content=DAGQUyJfBOE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+3. fungsi git:
     1. melakukan tracking jika ada perubahan kode
     2. melakukan tracking siapa saja yang melakukan perubahan pada kode
     3. memfasilitasi para programmer untuk melakukan collaboration
