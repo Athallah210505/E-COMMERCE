@@ -19,6 +19,13 @@
             margin-left: 10%;
             margin-top: -200px;
         }
+        h2 {
+            text-align: rigth;
+            margin-top: 20px;
+            font-size: 45px;
+            margin-left: 10%;
+            margin-top: -200px;
+        }
 
         h5 {
             margin: 0;
@@ -44,11 +51,19 @@
         .container {
             background-color: #F1D068;
             padding: 40px;
-            margin-top: 100px;
+            margin-top: 200px;
             border-radius: 20px;
             margin-left: 5%;
 
         }
+        .container-nama{
+            background-color: #F1D068;
+            padding: 40px;
+            margin-top: 100px;
+            border-radius: 20px;
+            margin-left: 5%;
+        }
+
 
         .submit-button {
             margin-top: 20px;
@@ -76,6 +91,7 @@
 
     <div class="box">
         <h1>Welcome! Toko Emas86</h1>
+        <h2>Details</h2>
         <div class="container">
             <h5>Name:</h5>
             <p>{{ gold_name }}</p>
@@ -85,6 +101,14 @@
             <p>{{ quantity }}</p>
             <h5>Price:</h5>
             <p>{{ price }}</p>
+        </div>
+        <div class="container-nama">
+            <h5>Name:</h5>
+            <p>{{ name}}</p>
+            <h5>NPM : </h5>
+            <p>{{ npm }}</p>
+            <h5>Kelas :</h5>
+            <p>{{ kelas }}</p>
         </div>
         <div class="submit-button">
             <button type="button">Submit</button>
