@@ -1,6 +1,6 @@
 from django.db import models
 
-class MoodEntry(models.Model):
+class Project(models.Model):
     mood = models.CharField(max_length=255)
     time = models.DateField(auto_now_add=True)
     feelings = models.TextField()
