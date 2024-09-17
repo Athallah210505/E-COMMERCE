@@ -55,29 +55,34 @@ Bagaimana Penyerang Memanfaatkan CSRF :
 
 5. 
     1. Membuat forms.py di direktori main dengan isi
-    from django.forms import ModelForm
-    from main.models import Product
-    class ProductEntryForm(ModelForm):
-        class Meta:
-            model = Product  #bisa jadi salah disini
-            fields = ["gold_name", "price", "quantity", "description"]
+        from django.forms import ModelForm
+        from main.models import Product
+        class ProductEntryForm(ModelForm):
+            class Meta:
+                model = Product  #bisa jadi salah disini
+                fields = ["gold_name", "price", "quantity", "description"]
+
     2. Menambahkan Method create_product_entry untuk menambah entri database di file views.py di direktori main
-        def create_product_entry(request):
-        form = ProductEntryForm(request.POST or None)
-            if form.is_valid() and request.method == "POST":
-                form.save()
-                return redirect("main:show_main")
-            context = {
-                "form": form
-            }
-        return render(request, "create_product.html", context)
+            def create_product_entry(request):
+            form = ProductEntryForm(request.POST or None)
+                if form.is_valid() and request.method == "POST":
+                    form.save()
+                    return redirect("main:show_main")
+                context = {
+                    "form": form
+                }
+            return render(request, "create_product.html", context)
+
         3. Mengimplementasikan form yang tadi sudah dibuat ke dalam laman baru dengan template html yang baru create_product.html
+
         4. Menambahkan lokasi folder templates tersebut ke settings.py di direktori jual_emas
             ...
             'DIRS': [BASE_DIR / 'templates'],
             ...
         5. Mengimplementasikan database ke dalam page utama main.html dan juga menjadi perpanjangan dari base.html di direktori utama
+
         6. Menggunakan folder static untuk mengorganisir aset yang digunakan seperti gambar.
+        
         7. Menambahkan fungsi-fungsi yang diperlukan untuk menampilkan JSON dan XML baik secara keseluruhan maupun per entri database
             def show_xml (request):
             data = Product.objects.all()
