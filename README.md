@@ -107,14 +107,15 @@ Bagaimana Penyerang Memanfaatkan CSRF :
 
 !!! DOKUMENTASI !!!
 
+
 JSON 
-![](static/images/raster/JSON.png)
+![](static/raster/images/JSON.png)
 XML
-![](static/images/raster/XML.png)
+![](static/raster/images/XML.png)
 JSON_ID
-![](static/images/raster/JSON_ID.png)
+![](static/raster/images/JSON_ID.png)
 XML_ID
-![](static/images/raster/XML_ID.png)
+![](static/raster/images/XML_ID.png)
 
 
 
