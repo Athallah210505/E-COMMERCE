@@ -35,7 +35,7 @@ def show_xml (request):
 
 
 def show_json(request):
-    data_id= Project.objects.all()
+    data= Project.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def show_xml_by_id(request, id):
