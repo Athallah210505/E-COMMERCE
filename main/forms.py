@@ -1,9 +1,9 @@
 from django.forms import ModelForm
-from main.models import Project
+from main.models import Product
 
 
-class ProjectEntryForm(ModelForm):
+class ProductEntryForm(ModelForm):
     class Meta:
-        model = Project  #bisa jadi salah disini
+        model = Product  #bisa jadi salah disini
         fields = ["gold_name", "price", "quantity", "description"]
     
