@@ -23,6 +23,7 @@ def create_product_entry(request):
         form = ProductEntryForm(request.POST or None)
         if form.is_valid() and request.method == "POST":
             form.save()
+            print(request.POST)
             return redirect("main:show_main")
         context = {
             "form": form
