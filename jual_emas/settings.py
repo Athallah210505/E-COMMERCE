@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%v1d5y6^f-$_pej2&a&7ihb9ui5rr#-*@5yd%q7519o!%1)*6k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "athallah-nadhif-tokoemas86.pbp.cs.ui.ac.id", "http://athallah-nadhif-tokoemas86.pbp.cs.ui.ac.id"]
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main'
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -123,4 +124,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","https://athallah-nadhif-tokoemas86.pbp.cs.ui.ac.id", "https://athallah-nadhif-tokoemas86.pbp.cs.ui.ac.id"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://athallah-nadhif-tokoemas86.pbp.cs.ui.ac.id", "https://athallah-nadhif-tokoemas86.pbp.cs.ui.ac.id"]
