@@ -55,54 +55,59 @@ Bagaimana Penyerang Memanfaatkan CSRF :
 
 5. 
     1. Membuat forms.py di direktori main dengan isi
-    from django.forms import ModelForm
-    from main.models import Product
-    class ProductEntryForm(ModelForm):
-        class Meta:
-            model = Product  #bisa jadi salah disini
-            fields = ["gold_name", "price", "quantity", "description"]
+        from django.forms import ModelForm
+        from main.models import Product
+        class ProductEntryForm(ModelForm):
+            class Meta:
+                model = Product  #bisa jadi salah disini
+                fields = ["gold_name", "price", "quantity", "description"]
+
     2. Menambahkan Method create_product_entry untuk menambah entri database di file views.py di direktori main
-        def create_product_entry(request):
-        form = ProductEntryForm(request.POST or None)
-            if form.is_valid() and request.method == "POST":
-                form.save()
-                return redirect("main:show_main")
-            context = {
-                "form": form
-            }
-        return render(request, "create_product.html", context)
-        3. Mengimplementasikan form yang tadi sudah dibuat ke dalam laman baru dengan template html yang baru create_product.html
-        4. Menambahkan lokasi folder templates tersebut ke settings.py di direktori jual_emas
-            ...
-            'DIRS': [BASE_DIR / 'templates'],
-            ...
-        5. Mengimplementasikan database ke dalam page utama main.html dan juga menjadi perpanjangan dari base.html di direktori utama
-        6. Menggunakan folder static untuk mengorganisir aset yang digunakan seperti gambar.
-        7. Menambahkan fungsi-fungsi yang diperlukan untuk menampilkan JSON dan XML baik secara keseluruhan maupun per entri database
-            def show_xml (request):
-            data = Product.objects.all()
-            return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+            def create_product_entry(request):
+            form = ProductEntryForm(request.POST or None)
+                if form.is_valid() and request.method == "POST":
+                    form.save()
+                    return redirect("main:show_main")
+                context = {
+                    "form": form
+                }
+            return render(request, "create_product.html", context)
+
+    3. Mengimplementasikan form yang tadi sudah dibuat ke dalam laman baru dengan template html yang baru create_product.html
+
+    4. Menambahkan lokasi folder templates tersebut ke settings.py di direktori jual_emas
+        ...
+        'DIRS': [BASE_DIR / 'templates'],
+        ...
+    5. Mengimplementasikan database ke dalam page utama main.html dan juga menjadi perpanjangan dari base.html di direktori utama
+
+    6. Menggunakan folder static untuk mengorganisir aset yang digunakan seperti gambar.
+    
+    7. Menambahkan fungsi-fungsi yang diperlukan untuk menampilkan JSON dan XML baik secara keseluruhan maupun per entri database
+        def show_xml (request):
+        data = Product.objects.all()
+        return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
 
-            def show_json(request):
-                data= Product.objects.all()
-                return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+        def show_json(request):
+            data= Product.objects.all()
+            return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
-            def show_xml_by_id(request, id):
-                data_id = Product.objects.filter(pk=id)  # Use the id argument passed to the function
-                return HttpResponse(serializers.serialize("xml", data_id), content_type="application/xml")
+        def show_xml_by_id(request, id):
+            data_id = Product.objects.filter(pk=id)  # Use the id argument passed to the function
+            return HttpResponse(serializers.serialize("xml", data_id), content_type="application/xml")
 
-            def show_json_by_id(request, id):
-                data_id = Product.objects.filter(pk=id)  # Use the id argument passed to the function
-                return HttpResponse(serializers.serialize("json", data_id), content_type="application/json")
+        def show_json_by_id(request, id):
+            data_id = Product.objects.filter(pk=id)  # Use the id argument passed to the function
+            return HttpResponse(serializers.serialize("json", data_id), content_type="application/json")
 
-        8. Merouting kembali URL yang bersangkutan di file urls.py
-        path('', views.show_main, name='show_main'),
-        path('create_product_entry', create_product_entry, name='create_product_entry'),
-        path('xml/', show_xml, name='show_xml'),
-        path ('json/', show_json, name='show_json'),
-        path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
-        path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
+    8. Merouting kembali URL yang bersangkutan di file urls.py
+    path('', views.show_main, name='show_main'),
+    path('create_product_entry', create_product_entry, name='create_product_entry'),
+    path('xml/', show_xml, name='show_xml'),
+    path ('json/', show_json, name='show_json'),
+    path('xml/<str:id>/', show_xml_by_id, name='show_xml_by_id'),
+    path('json/<str:id>/', show_json_by_id, name='show_json_by_id'),
 
 
 !!! DOKUMENTASI !!!
