@@ -167,6 +167,11 @@ Selanjutnya setiap kali pengunna melakukan permintaan ke server, maka browser ak
 Lalu django akan memeriksa apakah kuci session yang dikirimkan valid dan jika ditemukan, maka django akan mengetahui bahwa pengguna tersebut sudah pernah login dan data sudah tersimpan pada cookie session tersebut.
 	Dilain sisi tidak semua cookies aman digunakan, karena ada beberapa hal yang harus diperhatikan ketika mengakses cookie terutama dalam sistem keamanan.
 5. Proses Implementasi checklist secara step by step
+    - Membuat Fungsi registrasi:
+    menambahkan import pada views.py
+    menambahkan fungsi regis pada views.py
+    membuat register.html pada direktori main
+    lalu menambahkan import dan path url pada url.py
     - Membuat fitur Login dan logout:
     Menambahkan import import yang diperlukan seperti from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, from django.contrib.auth, import authenticate, login,from django.contrib.auth import logout,from main.views import logout_user
     Lalu menambahkan beberapa fungsi pada views.py seperti login_user dan logout_user
