@@ -154,7 +154,7 @@ Dan yang terakhir pada setting.py saya melakukan import os dan manganti debug me
     Model Pengguna: User adalah model bawaan yang menyimpan informasi pengguna seperti username, password,email, dan izin.
     Autentikasi: Fungsi authenticate() memeriksa kredensial pengguna untuk memverifikasi identitasnya.
     Sistem authorization
-    
+
     Izin: Izin diberikan kepada pengguna atau kelompok pengguna untuk mengontrol akses ke fitur atau data tertentu.
     Pemeriksaan Izin: Metode seperti user.has_perm() atau user.has_perms() digunakan untuk memeriksa apakah pengguna memiliki izin tertentu.
 
@@ -182,7 +182,7 @@ Lalu django akan memeriksa apakah kuci session yang dikirimkan valid dan jika di
     Dan menambahkan class Product(models.Model): # model ini akan membuat table di database dengan nama Product
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    Merubah beberapa komponen pada view.py di bagian create_product
+    - Merubah beberapa komponen pada view.py di bagian create_product
     Mengubah value pada product_entries 
     Melakukan make migration dan melakukan migrate
     Dan yang terakhir pada setting.py saya melakukan import os dan manganti debug menjadi 
