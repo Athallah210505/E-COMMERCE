@@ -122,5 +122,74 @@ JSON_ID
 XML_ID
 ![](static/raster/images/XML_ID.png)
 
+=====================================
+TUGAS 4 
+=====================================
+
+
+1. - HttpResponseRedirect() adalah class yang secara langsung menghasilkan respons HTTP untuk di redirect.  HttpResponseRedirect() memiliki fungsi untuk menerima sebuah URL sebagai argumen dan mengembalikan objek respons yang memberi tahu browser kita untuk mengalihkan user ke URL tersebut. HttpResponseRedirect()  juga memiliki fleksibilitas yang tinggi yang memungkinkan untuk mengkostumisasi respons dan HttpResponseRedirect() digunakan ketika kita ingin memiliki kontrol penuh pada URL kita dan dapat diinstansiasi secara langsung dengan cara paste URL yang kita mau redirect.
+- redirect() adalah fungsi shortcut yang lebih ringkas dan lebih mudah daripada HttpResponseRedirect(). Namun fungsi dari redirect() membungkus HttpResponseRedirect()  dan menyediakan UI yang lebih sederhana.  Umunya programmer memakai redirect() untuk proses pengalihan karena lebih mudah dibaca dan juga lebih mudah ditulis.
+
+2. Menghubungkan model dengan user
+Menambhakn import yang diperlukan pada models.py seperti from django.contrib.auth.models import User
+Dan menambahkan class Product(models.Model): # model ini akan membuat table di database dengan nama Product
+   user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+Merrubah beberapa kompenen pada view.py di bagian create_product
+Mengubah value pada product_entries 
+Melakuakan make migration dan melakukan migrate
+Dan yang terakhir pada setting.py saya melakukan import os dan manganti debug menjadi 
+    PRODUCTION = os.getenv("PRODUCTION", False)
+    DEBUG = not PRODUCTION
+
+
+
+3. 1. Authorization:
+    Authorization adalah process yang dimana akan menentukan apa yang user dapat lakukan pada sistem. Authorization menjelaskan mengenai permission dan acces yang diperbolehkan untuk user lakukan pada sistem
+	2. Authentication
+		Authentication adalah proses dimana dilakukanya proses verifikasi identitas dari user ataupun sistem, untuk memastikan bahwa yang dapat mengakses benar benar yang sudah disetujui.
+	
+    Django menyediakan kerangka kerja yang kuat untuk menangani otentikasi dan otorisasi dengan mudah. Berikut adalah cara kerjanya:
+    Sistem authentication
+    Model Pengguna: User adalah model bawaan yang menyimpan informasi pengguna seperti username, password,email, dan izin.
+    Autentikasi: Fungsi authenticate() memeriksa kredensial pengguna untuk memverifikasi identitasnya.
+    Sistem authorization
+    Izin: Izin diberikan kepada pengguna atau kelompok pengguna untuk mengontrol akses ke fitur atau data tertentu.
+    Pemeriksaan Izin: Metode seperti user.has_perm() atau user.has_perms() digunakan untuk memeriksa apakah pengguna memiliki izin tertentu.
+    Otentikasi memastikan siapa pengguna, sedangkan otorisasi menentukan apa yang dapat dilakukan oleh pengguna tersebut. Django menggabungkan kedua fungsionalitas ini dalam sistem otentikasinya, sehingga pengembang dapat menerapkan mekanisme otentikasi dan otorisasi yang aman dengan mudah.
+
+4. Django menggunakan session untuk mengingat pengguna yang telah login. Saat pengguna berhasil login, Django akan membuat sebuah session yang unik dan menyimpannya sebagai cookie di browser pengguna. Cookie ini berisi sebuah kunci session yang merujuk ke data session yang disimpan di server. Prosesnya: 
+ Pengguna login : saat pengguna login dan memasukan username dan password yang benar, maka django akan membuat session baru.
+Cookie Session : Django akan mengirimkan cookie session pada browser pengguna. Cookie ini berisi sebuah kunci unik yang dapat mengidentifikasi session tersebut.
+Selanjutnya setiap kali pengunna melakukan permintaan ke server, maka browser akan mengirimkan cookiesnya session lagi
+Lalu django akan memeriksa apakah kuci session yang dikirimkan valid dan jika ditemukan, maka django akan mengetahui bahwa pengguna tersebut sudah pernah login dan data sudah tersimpan pada cookie session tersebut.
+	Dilain sisi tidak semua cookies aman digunakan, karena ada beberapa hal yang harus diperhatikan ketika mengakses cookie terutama dalam sistem keamanan.
+5. Proses Implementasi checklist secara step by step
+    - Membuat fitur Login dan logout:
+    Menambahkan import import yang diperlukan seperti from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, from django.contrib.auth, import authenticate, login,from django.contrib.auth import logout,from main.views import logout_user
+    Lalu menambahkan beberapa fungsi pada views.py seperti login_user dan logout_user
+    - Selanjutnya saya membuat HTML baru yaitu login.html  dimana akan menjadi sistem pertama yang akan dilakukan oleh sistem 
+    Melakukan routing url seperti biasa untuk mengatur alur tampilan laman
+    Menampilkan last login pada halaman utama
+    Menambahkan import yang diperlukan 
+    Menambah beberapa komponen pada login user dan menambahkan response untuk membuat responsive pada html saya yang saya tambahkan response = HttpResponseRedirect(reverse("main:show_main")) untuk membuat response
+    response.set_cookie('last_login', str(datetime.datetime.now())) berfungsi untuk membuat cookie last_login dan menambahkannya ke dalam response
+    alu pada show main saya menambahkan 'last_login': request.COOKIES['last_login'] berfungsi menambahkan informasi cookie last_login pada response yang akan ditampilkan di halaman web, pada context
+    - Menghubungkan model dengan user
+    Menambhakn import yang diperlukan pada models.py seperti from django.contrib.auth.models import User
+    Dan menambahkan class Product(models.Model): # model ini akan membuat table di database dengan nama Product
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    Merubah beberapa komponen pada view.py di bagian create_product
+    Mengubah value pada product_entries 
+    Melakukan make migration dan melakukan migrate
+    Dan yang terakhir pada setting.py saya melakukan import os dan manganti debug menjadi 
+    PRODUCTION = os.getenv("PRODUCTION", False)
+    DEBUG = not PRODUCTION
+
+
+
+		
+
 
 
