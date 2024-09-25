@@ -194,6 +194,13 @@ Lalu django akan memeriksa apakah kuci session yang dikirimkan valid dan jika di
     PRODUCTION = os.getenv("PRODUCTION", False)
     DEBUG = not PRODUCTION
 
+===============
+BUKTI
+===============
+AKUN1
+![](static/raster/images/AKUN1.png)
+AKUN2
+![](static/raster/images/AKUN2.png)
 
 
 		
