@@ -154,8 +154,10 @@ Dan yang terakhir pada setting.py saya melakukan import os dan manganti debug me
     Model Pengguna: User adalah model bawaan yang menyimpan informasi pengguna seperti username, password,email, dan izin.
     Autentikasi: Fungsi authenticate() memeriksa kredensial pengguna untuk memverifikasi identitasnya.
     Sistem authorization
+
     Izin: Izin diberikan kepada pengguna atau kelompok pengguna untuk mengontrol akses ke fitur atau data tertentu.
     Pemeriksaan Izin: Metode seperti user.has_perm() atau user.has_perms() digunakan untuk memeriksa apakah pengguna memiliki izin tertentu.
+
     Authentication memastikan siapa pengguna, sedangkan authorization menentukan apa yang dapat dilakukan oleh pengguna tersebut. Django menggabungkan kedua fungsionalitas ini dalam sistem otentikasinya, sehingga pengembang dapat menerapkan mekanisme otentikasi dan otorisasi yang aman dengan mudah.
 
 4. Django menggunakan session untuk mengingat pengguna yang telah login. Saat pengguna berhasil login, Django akan membuat sebuah session yang unik dan menyimpannya sebagai cookie di browser pengguna. Cookie ini berisi sebuah kunci session yang merujuk ke data session yang disimpan di server. Prosesnya: 
@@ -165,6 +167,11 @@ Selanjutnya setiap kali pengunna melakukan permintaan ke server, maka browser ak
 Lalu django akan memeriksa apakah kuci session yang dikirimkan valid dan jika ditemukan, maka django akan mengetahui bahwa pengguna tersebut sudah pernah login dan data sudah tersimpan pada cookie session tersebut.
 	Dilain sisi tidak semua cookies aman digunakan, karena ada beberapa hal yang harus diperhatikan ketika mengakses cookie terutama dalam sistem keamanan.
 5. Proses Implementasi checklist secara step by step
+    - Membuat Fungsi registrasi:
+    menambahkan import pada views.py
+    menambahkan fungsi regis pada views.py
+    membuat register.html pada direktori main
+    lalu menambahkan import dan path url pada url.py
     - Membuat fitur Login dan logout:
     Menambahkan import import yang diperlukan seperti from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, from django.contrib.auth, import authenticate, login,from django.contrib.auth import logout,from main.views import logout_user
     Lalu menambahkan beberapa fungsi pada views.py seperti login_user dan logout_user
@@ -180,7 +187,7 @@ Lalu django akan memeriksa apakah kuci session yang dikirimkan valid dan jika di
     Dan menambahkan class Product(models.Model): # model ini akan membuat table di database dengan nama Product
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    Merubah beberapa komponen pada view.py di bagian create_product
+    - Merubah beberapa komponen pada view.py di bagian create_product
     Mengubah value pada product_entries 
     Melakukan make migration dan melakukan migrate
     Dan yang terakhir pada setting.py saya melakukan import os dan manganti debug menjadi 
