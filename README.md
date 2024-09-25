@@ -154,8 +154,10 @@ Dan yang terakhir pada setting.py saya melakukan import os dan manganti debug me
     Model Pengguna: User adalah model bawaan yang menyimpan informasi pengguna seperti username, password,email, dan izin.
     Autentikasi: Fungsi authenticate() memeriksa kredensial pengguna untuk memverifikasi identitasnya.
     Sistem authorization
+    
     Izin: Izin diberikan kepada pengguna atau kelompok pengguna untuk mengontrol akses ke fitur atau data tertentu.
     Pemeriksaan Izin: Metode seperti user.has_perm() atau user.has_perms() digunakan untuk memeriksa apakah pengguna memiliki izin tertentu.
+
     Authentication memastikan siapa pengguna, sedangkan authorization menentukan apa yang dapat dilakukan oleh pengguna tersebut. Django menggabungkan kedua fungsionalitas ini dalam sistem otentikasinya, sehingga pengembang dapat menerapkan mekanisme otentikasi dan otorisasi yang aman dengan mudah.
 
 4. Django menggunakan session untuk mengingat pengguna yang telah login. Saat pengguna berhasil login, Django akan membuat sebuah session yang unik dan menyimpannya sebagai cookie di browser pengguna. Cookie ini berisi sebuah kunci session yang merujuk ke data session yang disimpan di server. Prosesnya: 
