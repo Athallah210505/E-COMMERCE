@@ -83,25 +83,7 @@
         {% if product_entries %}
         <div class="scroll-container">
             {% for product_entry in product_entries %}
-            <div class="scroll-item">
-                <div class="product-card">
-                    <!-- Product Details -->
-                    <h3>Gold Name: {{ product_entry.gold_name }}</h3>
-                    <p class="mt-2">Quantity: {{ product_entry.quantity }}</p>
-
-                    <h3 class="mt-4">Description:</h3>
-                    <p class="mt-2">{{ product_entry.description }}</p>
-
-                    <h3 class="mt-4">Price:</h3>
-                    <p class="mt-2">{{ product_entry.price }}</p>
-
-                    <!-- Action Buttons -->
-                    <div class="action-buttons mt-6 flex justify-between">
-                        <a href="{% url 'main:edit_product' product_entry.pk %}" class="bg-yellow-500 text-white px-6 py-2 rounded-full hover:bg-yellow-600 transition">Edit</a>
-                        <a href="{% url 'main:delete_product' product_entry.pk %}" class="bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600 transition">Delete</a>
-                    </div>
-                </div>
-            </div>
+                {% include 'product_card.html' %} <!-- Corrected the include path -->
             {% endfor %}
         </div>
         {% else %}

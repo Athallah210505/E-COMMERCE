@@ -203,7 +203,191 @@ AKUN2
 ![](static/raster/images/AKUN2.png)
 
 
-		
+# TUGAS 5
+======================================
+## 1 
+1. Dalam CSS, ketika beberapa selector diterapkan pada elemen yang sama, spesifisitas digunakan untuk menentukan gaya mana yang berlaku. Semakin tinggi spesifisitas, semakin besar kemungkinannya untuk diterapkan pada elemen tersebut. Berikut adalah urutan prioritas selector CSS, dari yang tertinggi hingga terendah:
+
+### inline Styles 
+ Inline Styles (Gaya Langsung di Elemen) Gaya yang diterapkan langsung pada elemen melalui atribut style memiliki prioritas tertinggi.
+
+``Contoh: <div style="color: blue ;">this teks is blue</div>
+``
+
+Prioritas: Inline style mengabaikan gaya yang ditetapkan oleh ID, class, atau elemen selector lainnya.
+
+### ID SELECTOR
+ID Selectors (Selector Berdasarkan ID) Selector ini menggunakan atribut id dari elemen HTML. Karena id harus unik, spesifisitasnya cukup tinggi.
+
+``Contoh: #judul { color: blue; } akan mempengaruhi elemen dengan ID "judul".
+``
+
+Prioritas: Lebih tinggi dari selector class dan elemen.
+
+### Class Selector
+Class Selectors (Selector Berdasarkan Class) Selector ini menggunakan atribut class yang dapat diterapkan ke beberapa elemen.
+
+``Contoh: .konten { margin: 20px; } akan mempengaruhi semua elemen dengan class "konten".
+``
+
+Prioritas: Lebih tinggi dari selector elemen, tetapi lebih rendah dari ID.
+
+### Element Selector 
+Element Selectors (Selector Berdasarkan Elemen) Selector ini hanya berdasarkan elemen HTML seperti div, p atau h1. Spesifisitasnya paling rendah.
+
+``
+Contoh: p { color: green; } akan mempengaruhi semua elemen paragraf (<p>).
+``
+
+Element Selectors (Selector Berdasarkan Elemen) Selector ini hanya berdasarkan elemen HTML seperti div, p atau h1. Spesifisitasnya paling rendah.
+
+Prioritas: Ini memiliki spesifisitas terendah dibandingkan ID dan class selector.
+
+## 2
+2. Responsive design sangat penting dalam aplikasi web karena dengan mengimplementasikan responsive design memungkinkan web kita untuk beradaptasi dengan berbagai ukuran dari gadget yang kita pakai, seperti desktop dan mobile.
+
+contoh: 
+
+X 
+		Twitter memiliki desain responsif yang sangat baik. Saat dibuka di desktop, smartphone, tata letaknya akan otomatis menyesuaikan dan memberikan pengalaman pengguna yang konsisten
+
+airbnb
+Situs dan aplikasinya secara otomatis menyesuaikan ukuran gambar, menu, dan teks agar mudah dibaca di semua perangkat.
+
+**Yang Tidak Menggunakan**
+
+Situs lama 
+banyak situs pemerintah lama (baik lokal maupun internasional) belum menerapkan desain responsif, sehingga tampilannya tidak optimal di perangkat mobile. Pengguna sering kali harus memperbesar layar dan menggeser untuk membaca konten
+
+## 3 
+Margin 
+- bagian luar yang memisahkan elemen tersebut dengan elemen lainya 
+- tidak mempengaruhi ukuran elemen, hanya menambah jarak diluar 
+
+    - margin-top
+    - margin-right
+    - margin-bottom
+    - margin-left
+    - margin (shorthand untuk semua sisi)
+
+Border 
+- Garis yang mengelilingi elemen
+- mempengaruhi elemen tp tidak mengubah ukuran elemen
+
+Padding 
+- Ruang antar boder dan elemen
+- mengubah besar kecilnya elemen tanpa mempengaruhi border dan margin
+
+    - padding-top
+    - padding-right
+    - padding-bottom
+    - padding-left
+
+## 4 
+**FLexbox**
+Flexbox (Flexible Box Layout) adalah modul tata letak CSS yang dirancang untuk memudahkan pengaturan dan penempatan elemen dalam sebuah kontainer, terutama untuk elemen-elemen yang berubah ukuran secara dinamis.
+
+Kegunaan:
+- menyusun elemen secara horizontal atau vertikal dengan mudah 
+- mengatur jarak antar elemen
+- Fleksibel dalam mengubah ukuran elemen agar sesuai dengan ukuran kontainer.
+
+Contoh Kegunaan 
+
+```python
+.container {
+  display: flex;
+  justify-content: space-between; #Menyebar elemen secara merata
+  align-items: center;  #Vertikal rata tengah 
+}
+
+.item {
+  flex: 1; # Elemen ini akan menyesuaikan ukurannya secara fleksibel 
+}
+```
+
+**CSS GRID**  adalah sistem tata letak dua dimensi yang memungkinkan kita untuk menyusun elemen dalam baris dan kolom. Grid memberi kontrol yang lebih detail dibandingkan Flexbox dalam mengatur tata letak kompleks.
+Kegunaan:
+Memudahkan pembuatan layout yang rumit seperti grid berbasis kolom dan baris.
+Mengatur posisi elemen dengan lebih presisi, baik secara horizontal maupun vertikal.
+ 
+```python
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr; #3 kolom dengan lebar proporsional */
+  grid-gap: 10px; # Jarak antar kolom/baris */
+}
+
+.item1 {
+  grid-column: 1 / 3; # Elemen ini akan mengisi kolom 1 sampai 2 */
+}
+
+.item2 {
+  grid-row: 2 / 4; # Elemen ini akan mengisi baris 2 sampai 3 */
+}
+```
+
+## 5 
+
+1. Menambahkan tailwind pada aplikasi dengan memasukan 
+```python
+<script src="https://cdn.tailwindcss.com">
+``` 
+pada base.html
+
+2. Menambahkan Edit dan delete pada views.py, url.py, dan main.html dan juga melakukan penambahan import 
+
+3. Membuat Nav Bar yang seperti s=diminta dengan memahammi konsep tailwind seperti yang dicontohkan pad tutorial 
+
+4. Melakiukan konfigurasi static pada settings.py
+
+5. Lalu melakukan desain pada setiap HTML yang ada menggunakan tailwind agar lebih menarik
+contoh
 
 
+```python
 
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Create Product Entry</title>
+{% endblock meta %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<div class="flex flex-col min-h-screen bg-[#F5F5DC]"> <!-- Cream background -->
+  <div class="container mx-auto px-4 py-8 mt-16 max-w-xl">
+    <h1 class="text-3xl font-bold text-center mb-8 text-[#6A1B47]">Create Product Entry</h1> <!-- Burgundy text -->
+  
+    <div class="bg-white shadow-md rounded-lg p-6 form-style">
+      <form method="POST" class="space-y-6">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="flex flex-col">
+            <label for="{{ field.id_for_label }}" class="mb-2 font-semibold text-[#6A1B47]"> <!-- Burgundy label -->
+              {{ field.label }}
+            </label>
+            <div class="w-full">
+              {{ field }}
+            </div>
+            {% if field.help_text %}
+              <p class="mt-1 text-sm text-gray-500">{{ field.help_text }}</p>
+            {% endif %}
+            {% for error in field.errors %}
+              <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endfor %}
+        <div class="flex justify-center mt-6">
+          <button type="submit" class="bg-[#6A1B47] text-white font-semibold px-6 py-3 rounded-lg hover:bg-[#822659] transition duration-300 ease-in-out w-full"> <!-- Burgundy button -->
+            Create Product Entry
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+```

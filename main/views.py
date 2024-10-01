@@ -117,4 +117,3 @@ def delete_product(request, id):
     product_entries.delete()
 
     return HttpResponseRedirect(reverse('main:show_main'))
-
