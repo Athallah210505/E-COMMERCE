@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<div class="flex flex-col min-h-screen bg-[#F5F5DC]"> <!-- Cream background -->
+    <div class="container mx-auto px-4 py-8 mt-16 max-w-xl">
+        <h1 class="text-3xl font-bold text-center mb-8 text-[#6A1B47]">Edit Product</h1> <!-- Burgundy text -->
+
+        <div class="bg-white shadow-md rounded-lg p-6 form-style">
+            <form method="POST" class="space-y-6">
+                {% csrf_token %}
+                {{ form.as_p }} <!-- Automatically renders form fields in <p> tags for clean formatting -->
+                
+                <div class="flex justify-center mt-6">
+                    <button type="submit" class="bg-[#6A1B47] text-white font-semibold px-6 py-3 rounded-lg hover:bg-[#822659] transition duration-300 ease-in-out w-full"> <!-- Burgundy button -->
+                        Edit Product
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
