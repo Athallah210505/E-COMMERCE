@@ -1,183 +1,122 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Product Entries</h2>
+{% include 'navbar.html' %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            background-color: #F1D068;
-            color: #333;
+        .highlight {
+            background-color: #FFD700; /* Gold color */
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.2rem;
+            display: inline-block;
         }
 
-        h1, h2 {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 45px;
-            color: #2e4d3b;
+        .responsive-text {
+            font-size: clamp(1.5rem, 4vw, 4rem); /* Dynamically scales text size */
         }
 
-        h5 {
-            margin: 0;
-            font-size: 20px;
-            color: #2e4d3b;
+        /* Scroll container for horizontal scrolling */
+        .scroll-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 1.5rem; /* Gap between items */
+            padding-bottom: 1.5rem;
         }
 
-        p {
-            margin: 5px 0;
-            font-size: 16px;
+        .scroll-item {
+            flex: 0 0 auto;
+            width: 600px; /* Increased width for rectangle */
+            height: 400px; /* Height to give a rectangular shape */
+            scroll-snap-align: start;
         }
 
-        .box {
-            background-color: #F9F9F7;
-            padding: 30px;
-            border-radius: 20px;
-            width: 600px;
-            margin: 5% auto;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        /* Styling for product cards */
+        .product-card {
+            background-color: #FAF3E0;
+            padding: 2rem; /* Increased padding for larger cards */
+            border-radius: 1rem; /* Rounded corners for a soft look */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%; /* Ensure the product card fills the scroll item */
         }
 
-        .container, .container-nama {
-            background-color: #F1D068;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
-
-        .submit-button {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .submit-button button {
-            width: 200px;
-            padding: 10px;
-            background-color: #2e4d3b;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            cursor: pointer;
+        .product-card h3 {
+            font-size: 1.75rem;
             font-weight: bold;
+            color: #2E2E2E;
         }
 
-        .submit-button button:hover {
-            background-color: #1f3428;
+        .product-card p {
+            color: #5A5A5A;
         }
 
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            font-size: 18px;
-        }
-
-        th {
-            background-color: #2e4d3b;
-            color: white;
-        }
-
-        td {
-            background-color: #f9f9f7;
-        }
-
-        a {
-            display: block;
-            width: fit-content;
-            margin: 0 auto;
-        }
-
-        a button {
-            width: 200px;
-            padding: 10px;
-            background-color: #2e4d3b;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        a button:hover {
-            background-color: #1f3428;
+        .product-card .action-buttons {
+            margin-top: 1rem;
         }
     </style>
 </head>
-<body>
+<body class="bg-[#FAF3E0] text-gray-800 font-serif">
+    <!-- Hero Section -->
+    <section class="h-screen flex flex-col items-center justify-center bg-[#FAF3E0]">
+        <div class="text-center">
+            <h1 class="text-6xl font-bold responsive-text">
+                Welcome! <span class="highlight">Toko Emas86</span>
+            </h1>
+            <p class="text-lg mt-4 text-gray-700">Explore our exclusive selection of products.</p>
+        </div>
+    </section>
 
-    <div class="box">
-        <h1>Welcome! Toko Emas86</h1>
-        <h2>Detail:</h2>
-        <div class="container">
-            <h5>Gold Name:</h5>
-            <p>{{ gold_name }}</p>
-            <h5>Description:</h5>
-            <p>{{ description }}</p>
-            <h5>Quantity:</h5>
-            <p>{{ quantity }}</p>
-            <h5>Price:</h5>
-            <p>{{ price }}</p>
+    <div class="container mx-auto px-4 py-12">
+        <h2 class="text-4xl font-bold text-center mb-10">Product Entries</h2>
+
+        <!-- Horizontal scroll for product entries -->
+        {% if product_entries %}
+        <div class="scroll-container">
+            {% for product_entry in product_entries %}
+            <div class="scroll-item">
+                <div class="product-card">
+                    <!-- Product Details -->
+                    <h3>Gold Name: {{ product_entry.gold_name }}</h3>
+                    <p class="mt-2">Quantity: {{ product_entry.quantity }}</p>
+
+                    <h3 class="mt-4">Description:</h3>
+                    <p class="mt-2">{{ product_entry.description }}</p>
+
+                    <h3 class="mt-4">Price:</h3>
+                    <p class="mt-2">{{ product_entry.price }}</p>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons mt-6 flex justify-between">
+                        <a href="{% url 'main:edit_product' product_entry.pk %}" class="bg-yellow-500 text-white px-6 py-2 rounded-full hover:bg-yellow-600 transition">Edit</a>
+                        <a href="{% url 'main:delete_product' product_entry.pk %}" class="bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600 transition">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-        <div class="container-nama">
-            <h5>Name:</h5>
-            <p>{{ name }}</p>
-            <h5>NPM :</h5>
-            <p>{{ npm }}</p>
-            <h5>Kelas :</h5>
-            <p>{{ kelas }}</p>
-        </div>
-        <div class="submit-button">
-            <button type="button">Submit</button>
+        {% else %}
+        <p class="text-center text-gray-500 mt-6">Belum ada data produk pada Toko Emas86.</p>
+        {% endif %}
+
+        <!-- Add New Product Button -->
+        <div class="mt-10 text-center">
+            <a href="{% url 'main:create_product_entry' %}" class="bg-green-500 text-white px-6 py-3 rounded-full hover:bg-green-600 transition">Add New Product Entry</a>
         </div>
     </div>
 
-    {% if not product_entries %}
-    <p style="text-align: center;">Belum ada data product pada tokemasa_86.</p>
-    {% else %}
-    <table>
-        <tr>
-            <th>Gold Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Quantity</th>
-        </tr>
-        {% for product_entry in product_entries %}
-        <tr>
-            <td>{{ product_entry.gold_name }}</td>
-            <td>{{ product_entry.description }}</td>
-            <td>{{ product_entry.price }}</td>
-            <td>{{ product_entry.quantity }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% endif %}
-
-    <br />
-    <a href="{% url 'main:create_product_entry' %}">
-        <button>Add New Product Entry</button>
-    </a>
-    <a href="{% url 'main:logout' %}">
-        <button>Logout</button>
-    </a>
-
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
-    
+    <footer class="mt-12 py-6 bg-[#2E2E2E] text-center">
+        <p class="text-white product-text">© 2024 Toko Emas86 Collection. All rights reserved.</p>
+    </footer>
 </body>
 </html>
-
 {% endblock content %}
