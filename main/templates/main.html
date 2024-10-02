@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %} <!-- Load static tag here -->
 
 {% block content %}
 {% include 'navbar.html' %}
@@ -87,7 +88,11 @@
             {% endfor %}
         </div>
         {% else %}
-        <p class="text-center text-gray-500 mt-6">Belum ada data produk pada Toko Emas86.</p>
+        <!-- Display the sad image when no product entries are found -->
+        <div class="text-center mt-8">
+            <img src="{% static 'raster/images/sad.png' %}" alt="No Products Found" class="mx-auto w-48 h-48">
+            <p class="text-center text-gray-500 mt-6">Belum ada data produk pada Toko Emas86.</p>
+        </div>
         {% endif %}
 
         <!-- Add New Product Button -->
