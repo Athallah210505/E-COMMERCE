@@ -1,6 +1,6 @@
 <div class="scroll-item">
-    <div class="product-card bg-burgundy text-cream rounded-lg p-6 shadow-lg"> <!-- Added bg-burgundy and text-cream -->
-        <!-- Product Details -->
+    <div class="product-card bg-burgundy text-cream rounded-lg p-6 shadow-lg"> 
+       
         <h3 class="text-base sm:text-lg md:text-xl font-bold">Gold Name: {{ product_entry.gold_name }}</h3>
         <p class="mt-2 text-xs sm:text-sm">Quantity: {{ product_entry.quantity }}</p>
 
@@ -10,7 +10,7 @@
         <h3 class="mt-4 text-base sm:text-lg md:text-xl font-bold">Price:</h3>
         <p class="mt-2 text-xs sm:text-sm">{{ product_entry.price }}</p>
 
-        <!-- Action Buttons -->
+    
         <div class="action-buttons mt-6 flex justify-between">
             <a href="{% url 'main:edit_product' product_entry.pk %}" class="bg-yellow-500 text-white px-6 py-2 rounded-full text-sm sm:text-base hover:bg-yellow-600 shadow-md hover:shadow-lg transition">Edit</a>
             <a href="{% url 'main:delete_product' product_entry.pk %}" class="bg-red-500 text-white px-6 py-2 rounded-full text-sm sm:text-base hover:bg-red-600 shadow-md hover:shadow-lg transition">Delete</a>
