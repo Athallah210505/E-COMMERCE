@@ -1,108 +1,153 @@
 {% extends 'base.html' %}
-{% load static %} 
+{% load static %}
+
+{% block meta %}
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
+<title>Product Entry Tracker</title>
+{% endblock meta %}
 
 {% block content %}
 {% include 'navbar.html' %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page</title>
-    <script src="https://cdn.tailwindcss.com"></script>
 
-    <style>
-        .highlight {
-            background-color: #FFD700; /* Gold color */
-            padding: 0.2rem 0.4rem;
-            border-radius: 0.2rem;
-            display: inline-block;
-        }
+<!-- Main Section -->
+<section class="flex flex-col items-center justify-center h-[100vh] bg-[#FAF3E0] text-gray-800">
+  <div class="text-center">
+    <h1 class="text-8xl font-bold mb-4">
+      Welcome! <span class="highlight">Toko Emas86</span>
+    </h1>
+    <p class="text-2xl text-gray-700">Explore our exclusive selection of products.</p>
+  </div>
+</section>
 
-        .responsive-text {
-            font-size: clamp(1.5rem, 4vw, 4rem); /* Dynamically scales text size */
-        }
+<!-- Last Login Info -->
+<div class="px-3 mb-4">
+  <div class="flex rounded-md items-center bg-indigo-600 py-2 px-4 w-fit mx-auto">
+    <h1 class="text-white text-center">Last Login: {{ last_login }}</h1>
+  </div>
+</div>
 
-        /* Scroll container for horizontal scrolling */
-        .scroll-container {
-            display: flex;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            gap: 1.5rem; /* Gap between items */
-            padding-bottom: 1.5rem;
-        }
+<!-- Buttons for adding new products -->
+<div class="flex justify-center gap-4 mb-6">
+  <!-- Traditional Form for Adding Product -->
+  <a href="{% url 'main:create_product_entry' %}" class="bg-[#6A0DAD] hover:bg-[#5A0B8A] text-white font-bold py-3 px-6 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+    Add New Product Entry
+  </a>
 
-        .scroll-item {
-            flex: 0 0 auto;
-            width: 600px; /* Increased width for rectangle */
-            height: 400px; /* Height to give a rectangular shape */
-            scroll-snap-align: start;
-        }
+  <!-- AJAX Modal for Adding Product -->
+  <button class="bg-[#301934] hover:bg-[#240F29] text-white font-bold py-3 px-6 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onclick="showModal();">
+    Add New Product Entry by AJAX
+  </button>
+</div>
 
-        /* Styling for product cards */
-        .product-card {
-            background-color: #FAF3E0;
-            padding: 2rem; /* Increased padding for larger cards */
-            border-radius: 1rem; /* Rounded corners for a soft look */
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15); /* Stronger shadow */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%; /* Ensure the product card fills the scroll item */
-        }
+<!-- Container for Product Cards -->
+<div id="product_entry_cards" class="container mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3 py-12"></div>
 
-        .product-card h3 {
-            font-size: 1.75rem;
-            font-weight: bold;
-            color: #2E2E2E;
-        }
-
-        .product-card p {
-            color: #5A5A5A;
-        }
-
-        .product-card .action-buttons {
-            margin-top: 1rem;
-        }
-    </style>
-</head>
-<body class="bg-[#FAF3E0] text-gray-800 font-serif">
-    
-    <section class="h-screen flex flex-col items-center justify-center bg-[#FAF3E0]">
-        <div class="text-center">
-            <h1 class="text-6xl font-bold responsive-text">
-                Welcome! <span class="highlight">Toko Emas86</span>
-            </h1>
-            <p class="text-lg mt-4 text-gray-700">Explore our exclusive selection of products.</p>
-        </div>
-    </section>
-
-    <div class="container mx-auto px-4 py-12">
-        <h2 class="text-4xl font-bold text-center mb-10">Product Entries</h2>
-
-       
-        {% if product_entries %}
-        <div class="scroll-container">
-            {% for product_entry in product_entries %}
-                {% include 'product_card.html' %} 
-            {% endfor %}
-        </div>
-        {% else %}
-        
-        <div class="text-center mt-8">
-            <img src="{% static 'raster/images/sad.png' %}" alt="No Products Found" class="mx-auto w-48 h-48">
-            <p class="text-center text-gray-500 mt-6">Belum ada data produk pada Toko Emas86.</p>
-        </div>
-        {% endif %}
-
-        
-        <div class="mt-10 text-center">
-            <a href="{% url 'main:create_product_entry' %}" class="bg-green-500 text-white px-6 py-3 rounded-full hover:bg-green-600 transition">Add New Product Entry</a>
-        </div>
+<!-- Modal for AJAX Product Entry -->
+<div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
+  <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
+    <div class="flex items-center justify-between p-4 border-b rounded-t">
+      <h3 class="text-xl font-semibold text-gray-900">Add New Product Entry</h3>
+      <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onclick="hideModal();">
+        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
     </div>
 
-    <footer class="mt-12 py-6 bg-[#2E2E2E] text-center">
-        <p class="text-white product-text">© 2024 Toko Emas86 Collection. All rights reserved.</p>
-    </footer>
-</body>
-</html>
+    <div class="px-6 py-4 space-y-6 form-style">
+      <form id="productEntryForm">
+        <div class="mb-4">
+          <label for="gold_name" class="block text-sm font-medium text-gray-700">Gold Name</label>
+          <input type="text" id="gold_name" name="gold_name" class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="Enter gold name" required>
+        </div>
+        <div class="mb-4">
+          <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+          <textarea id="description" name="description" class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="Enter product description" required></textarea>
+        </div>
+        <div class="mb-4">
+          <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+          <input type="number" id="quantity" name="quantity" class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="Enter quantity" required>
+        </div>
+        <div class="mb-4">
+          <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+          <input type="text" id="price" name="price" class="mt-1 block w-full border border-gray-300 rounded-md p-2" placeholder="Enter price" required>
+        </div>
+      </form>
+    </div>
+
+    <div class="flex justify-end p-4 border-t border-gray-200 rounded-b">
+      <button type="button" class="bg-gray-500 text-white font-bold py-2 px-4 rounded-lg mr-2" onclick="hideModal();">Cancel</button>
+      <button type="submit" class="bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg" onclick="addProductEntry();">Save</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+  async function getProductEntries() {
+    const response = await fetch("{% url 'main:show_json' %}");
+    return response.json();
+  }
+
+  async function refreshProductEntries() {
+    const productEntries = await getProductEntries();
+    let htmlString = "";
+
+    if (productEntries.length === 0) {
+      htmlString = `
+        <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+          <p class="text-center text-gray-600 mt-4">No product data available.</p>
+        </div>
+      `;
+    } else {
+      productEntries.forEach(product => {
+        htmlString += `
+          <div class="product-card bg-burgundy text-cream rounded-lg p-6 shadow-lg">
+            <h3 class="text-lg font-bold">Gold Name: ${product.fields.gold_name}</h3>
+            <p class="mt-2">Quantity: ${product.fields.quantity}</p>
+            <p class="mt-4 font-bold">Description:</p>
+            <p>${product.fields.description}</p>
+            <p class="mt-4 font-bold">Price:</p>
+            <p>${product.fields.price}</p>
+            <div class="action-buttons mt-6 flex justify-between">
+              <a href="/edit-product/${product.pk}" class="bg-yellow-500 text-white px-4 py-2 rounded">Edit</a>
+              <a href="/delete-product/${product.pk}" class="bg-red-500 text-white px-4 py-2 rounded">Delete</a>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    document.getElementById("product_entry_cards").innerHTML = htmlString;
+  }
+
+  async function addProductEntry() {
+    const form = document.getElementById('productEntryForm');
+    const formData = new FormData(form);
+
+    await fetch("{% url 'main:add_product_entry_ajax' %}", {
+      method: "POST",
+      body: formData,
+    });
+
+    form.reset();
+    hideModal();
+    refreshProductEntries();
+  }
+
+  function showModal() {
+    document.getElementById('crudModal').classList.remove('hidden');
+    document.getElementById('crudModalContent').classList.remove('opacity-0', 'scale-95');
+    document.getElementById('crudModalContent').classList.add('opacity-100', 'scale-100');
+  }
+
+  function hideModal() {
+    document.getElementById('crudModalContent').classList.remove('opacity-100', 'scale-100');
+    document.getElementById('crudModalContent').classList.add('opacity-0', 'scale-95');
+    setTimeout(() => document.getElementById('crudModal').classList.add('hidden'), 150);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => refreshProductEntries());
+</script>
 {% endblock content %}
