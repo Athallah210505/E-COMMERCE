@@ -13,6 +13,12 @@ class Product(models.Model): # model ini akan membuat table di database dengan n
     npm = models.CharField(max_length=255)
     kelas = models.CharField(max_length=255)
     
+    def clean_product(self):
+        self.gold_name = self.gold_name.strip()
+        self.description = self.description.strip()
+        self.price = self.price.strip()
+        self.quantity = self.quantity.strip()
+    
 
     # @property
     # def is_mood_strong(self):

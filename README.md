@@ -391,3 +391,174 @@ contoh
 
 {% endblock %}
 ```
+
+
+# TUGAS 6
+=========================
+
+## 1 
+"JAVASCRIPT" adalah scripting language yang memberikan kita kemudahan untuk membuat konten, mengontrol media seperti foto, animasi, video dll secara dinamis. Javascript memerankan peran penting dalam web develpoment dengan memberikan banyak sekali benefit seperti fungsionalitas, sistem yang interaktif dan overall user experience
+
+Beberapa manfaat dari JavaScript dalam pengembangan aplikasi web adalah:
+ - Enhanced Interactivity : Javascript memungkinkan web developer membuat web yang lebih interaktif dan juga dinamis. Fitur-fitur seperti menu dropdown, window modal, dan updated konten secara real-time membantu webdev dalam meningkatkan keterlibatan user.
+ - User Experience : Dengan JavaScript, developer dapat mengimplementasikan operasi asinkron menggunakan AJAX yang memungkinkan data dimuat di latar belakang tanpa mengganggu dengan halaman user. Ini menghasilkan pengalaman yang lebih lancar, dan membuat konten lebih dinamis.
+ - Fleksibelitas : Selain halaman web, JavaScript dapat digunakan untuk pemrograman sisi server melalui lingkungan seperti Node.js, Fleksibilitas ini memungkinkan developer untuk menggunakan satu bahasa di berbagai domain.
+ - Memiliki fitur DOM : JavaScript memiliki fitur DOM (Document Object Model) yang memungkinkan perubahan secara real-time berdasarkan interaksi pengguna.
+ - Mempermudah Developer : JavaScript juga mendukung Full Stack Development, karena dapat digunakan di sisi back-end maupun front-end. Hal ini mempermudah proses pengembangan dan deployment aplikasi.
+
+ ## 2 
+ Penggunaan await saat menggunakan fetch() merupakan hal yang sanget penting untuk memastikan bahwa kita mendapatkan hasil dari permintaan jaringan sebelum melanjutkan ke langkah berikutnya dalam kode. Ketika digunakan dengan fetch(), await memungkinkan kita untuk menunggu respons dari permintaan jaringan (network request) sebelum kita melanjutkan untuk memproses data yang diterima.
+ contoh penggunaan pada kode
+
+ ```python
+ async function getProductEntries() {
+    const response = await fetch("{% url 'main:show_json' %}");
+    return response.json();
+  }
+
+  async function refreshProductEntries() {
+    const productEntries = await getProductEntries();
+    let htmlString = "";
+```
+
+ ## 3
+Kita menggunakan decorator @csrf_exxempt pada view yang diguanakan untuk AJAX POSST adalah untuk menghindari kesalahan CSRF dan memastikasn bahwa permintaan kita dapat dilakukan dengan benar.Biasanya @csrf_exempt digunakan juga untuk request POST digunakan saat, view kita memproses data dari servis eksternal yang tidak memiliki akses ke token CSRF, sehingga POST bisa request tanpa avalidasi CSRF. contoh pengunaan pada kode
+```python 
+@csrf_exempt
+@require_POST
+def add_product_entry_ajax(request):
+    gold_name = request.POST.get('gold_name')
+    description = request.POST.get('description')
+    price = request.POST.get('price')
+    quantity = request.POST.get('quantity')
+    user = request.user
+
+    new_product = Product(gold_name=gold_name, description=description, price=price, quantity=quantity, user=user)
+    new_product.save()
+    return HttpResponse(b"Product added successfully", status=201)
+```
+
+## 4 
+
+Melakukan pembersihan data pada di backend itu adalah hal yang penting dilakukan karena lebih aman dan memastikan integritas data. Validasi di frontend bisa dilewati, sehingga backend tetap perlu melakukan pembersihan untuk melindungi aplikasi dari manipulasi atau serangan. Oleh karena itu, kita memerlukan ada pembersihan di backend (server side) agar data yang diterima tidak mengandung serangan seperti XSS dllnya.
+
+## 5
+- Menambahkan Error message pada login user
+```python
+messages.error(request, "Invalid username or password. Please try again.")
+```
+- Selanjutnya saya membuat fungsi untuk menambahkan product dengan ajax. saya melakukan 
+```python
+import from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+```
+pada views.py dan saya juga membuat add product entry mengunakan ajax 
+```python 
+@csrf_exempt
+@require_POST
+def add_product_entry_ajax(request):
+    gold_name = strip_tags(request.POST.get('gold_name'))
+    description = strip_tags(request.POST.get('description'))
+    price = strip_tags(request.POST.get('price'))
+    quantity = strip_tags(request.POST.get('quantity'))
+    user = request.user
+
+    new_product = Product(gold_name=gold_name, description=description, price=price, quantity=quantity, user=user)
+    new_product.save()
+    return HttpResponse(b"Product added successfully", status=201)
+```
+dan juga setelah itu saya melanjutkan untuk melakukan import yang dibutuhkan pada urls.py
+
+- Menampilkan Data Mood Entry dengan fetch() API: 
+saya mengganti 
+```
+product_entries = productEntry.objects.filter(user=request.user)
+'product_entries': product_entries,
+```
+pada views.py dan menambahkan pada show_json dan show_xml
+
+- Lalu saya menghapus bagian block conditional product_entries untuk menampilkan ketika kosong atau tidak. 
+dan saya mengantikanya dengan 
+
+```
+<div id="product_entry_cards"></div>
+
+- Selanjutnya, saya membuat fungsi baru pada block <script> dengan nama refreshMoodEntries yang digunakan untuk me-refresh data moods secara asinkronus.
+
+```python
+
+  async function getProductEntries() {
+    const response = await fetch("{% url 'main:show_json' %}");
+    return response.json();
+  }
+
+  async function refreshProductEntries() {
+    const productEntries = await getProductEntries();
+    let htmlString = "";
+    productEntries.forEach((item)=>{
+        const product = DOMPurify.sanitize(item);
+    })
+
+    if (productEntries.length === 0) {
+      htmlString = `
+        <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+          <p class="text-center text-gray-600 mt-4">No product data available.</p>
+        </div>
+      `;
+    } else {
+      productEntries.forEach(product => {
+        htmlString += `
+          <div class="product-card bg-burgundy text-cream rounded-lg p-6 shadow-lg">
+            <h3 class="text-lg font-bold">Gold Name: ${product.fields.gold_name}</h3>
+            <p class="mt-2">Quantity: ${product.fields.quantity}</p>
+            <p class="mt-4 font-bold">Description:</p>
+            <p>${product.fields.description}</p>
+            <p class="mt-4 font-bold">Price:</p>
+            <p>${product.fields.price}</p>
+            <div class="action-buttons mt-6 flex justify-between">
+              <a href="/edit-product/${product.pk}" class="bg-yellow-500 text-white px-4 py-2 rounded">Edit</a>
+              <a href="/delete-product/${product.pk}" class="bg-red-500 text-white px-4 py-2 rounded">Delete</a>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    document.getElementById("product_entry_cards").innerHTML = htmlString;
+  }
+
+  ```
+
+  - lalu saya membuat modal sebagai form untuk menambah product 
+  dan juga merubah beberapa kode dalam add product dan add product by ajax
+```python
+async function addProductEntry() {
+    const form = document.getElementById('productEntryForm');
+    const formData = new FormData(form);
+
+    await fetch("{% url 'main:add_product_entry_ajax' %}", {
+      method: "POST",
+      body: formData,
+    });
+
+    form.reset();
+    hideModal();
+    refreshProductEntries();
+  }
+  ```
+- lalu saya menambahkan data product dengan ajax 
+```
+```
+
+- selanjutnya saya Melindungi Aplikasi dari Cross Site Scripting (XSS) dengan cara membuat cleaner dan menambhakan strip tags pada views.py dan model.py 
+
+```
+from django.utils.html import strip_tags
+
+```python
+def clean_product(self):
+        self.gold_name = self.gold_name.strip()
+        self.description = self.description.strip()
+        self.price = self.price.strip()
+        self.quantity = self.quantity.strip()
+```

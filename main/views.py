@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.utils.html import strip_tags
 
 @login_required(login_url='/login')
 def show_main(request):
@@ -103,10 +104,10 @@ def delete_product(request, id):
 @csrf_exempt
 @require_POST
 def add_product_entry_ajax(request):
-    gold_name = request.POST.get('gold_name')
-    description = request.POST.get('description')
-    price = request.POST.get('price')
-    quantity = request.POST.get('quantity')
+    gold_name = strip_tags(request.POST.get('gold_name'))
+    description = strip_tags(request.POST.get('description'))
+    price = strip_tags(request.POST.get('price'))
+    quantity = strip_tags(request.POST.get('quantity'))
     user = request.user
 
     new_product = Product(gold_name=gold_name, description=description, price=price, quantity=quantity, user=user)

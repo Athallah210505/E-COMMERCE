@@ -93,6 +93,9 @@
   async function refreshProductEntries() {
     const productEntries = await getProductEntries();
     let htmlString = "";
+    productEntries.forEach((item)=>{
+        const product = DOMPurify.sanitize(item);
+    })
 
     if (productEntries.length === 0) {
       htmlString = `
