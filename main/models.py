@@ -14,10 +14,18 @@ class Product(models.Model): # model ini akan membuat table di database dengan n
     kelas = models.CharField(max_length=255)
     
     def clean_product(self):
-        self.gold_name = self.gold_name.strip()
-        self.description = self.description.strip()
-        self.price = self.price.strip()
-        self.quantity = self.quantity.strip()
+        gold_name = self.cleaned_data.get('gold_name')
+        return gold_name
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        return price
+    def clean_quantity(self):
+        quantity = self.cleaned_data.get('quantity')
+        return quantity
+    def clean_description(self):
+        description = self.cleaned_data.get('description')
+        return description
+    
     
 
     # @property
