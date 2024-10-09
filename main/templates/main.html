@@ -102,11 +102,6 @@
         `;
       } else {
         productEntries.forEach(product => {
-            const description = DOMPurify.sanitize(product.fields.description);
-            const price = DOMPurify.sanitize(product.fields.price);
-            const quantity = DOMPurify.sanitize(product.fields.quantity);
-            const goldName = DOMPurify.sanitize(product.fields.gold_name);
-
           htmlString += `
             <div class="product-card bg-burgundy text-cream rounded-lg p-6 shadow-lg">
               <h3 class="text-lg font-bold">Gold Name: ${product.fields.gold_name}</h3>
@@ -128,26 +123,26 @@
     }
   
     // Validation function to check input data before submitting
-    function validateForm() {
+    function validateForm(event) {
+      event.preventDefault(); // Prevent form from submitting
+  
       const goldName = document.getElementById('gold_name').value.trim();
-      const errorMessageElement = document.getElementById('errorMessage');
+      const errorMessageElement = document.getElementById('gold_name_error');
   
       // Sanitize and check input for potential issues
       if (!goldName || goldName.includes('<') || goldName.includes('>')) {
-        errorMessageElement.innerText = "Invalid input for Gold Name.";
         errorMessageElement.classList.remove('hidden');
         return false; // Block form submission
       }
   
       // Hide error message if validation passes
       errorMessageElement.classList.add('hidden');
+      addProductEntry(); // Call the AJAX function to add the product
       return true; // Allow form submission
     }
   
     // Function to add a new product entry via AJAX
     async function addProductEntry() {
-      if (!validateForm()) return; // Stop if validation fails
-  
       const form = document.getElementById('productEntryForm');
       const formData = new FormData(form);
   
@@ -180,4 +175,5 @@
     });
   </script>
   
+
 {% endblock content %}
