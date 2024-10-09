@@ -480,8 +480,9 @@ pada views.py dan menambahkan pada show_json dan show_xml
 - Lalu saya menghapus bagian block conditional product_entries untuk menampilkan ketika kosong atau tidak. 
 dan saya mengantikanya dengan 
 
-```
+```python
 <div id="product_entry_cards"></div>
+```
 
 - Selanjutnya, saya membuat fungsi baru pada block <script> dengan nama refreshMoodEntries yang digunakan untuk me-refresh data moods secara asinkronus.
 
@@ -546,14 +547,13 @@ async function addProductEntry() {
     refreshProductEntries();
   }
   ```
-- lalu saya menambahkan data product dengan ajax 
-```
-```
+
 
 - selanjutnya saya Melindungi Aplikasi dari Cross Site Scripting (XSS) dengan cara membuat cleaner dan menambhakan strip tags pada views.py dan model.py 
 
-```
+```python
 from django.utils.html import strip_tags
+```
 
 ```python
 def clean_product(self):
