@@ -471,7 +471,7 @@ dan juga setelah itu saya melanjutkan untuk melakukan import yang dibutuhkan pad
 
 - Menampilkan Data Mood Entry dengan fetch() API: 
 saya mengganti 
-```
+```python
 product_entries = productEntry.objects.filter(user=request.user)
 'product_entries': product_entries,
 ```
