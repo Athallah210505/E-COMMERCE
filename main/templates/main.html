@@ -36,10 +36,9 @@
   </button>
 </div>
 
-// cards for product entries
+
 <div id="product_entry_cards" class="container mx-auto grid gap-6 sm:grid-cols-2 lg:grid-cols-3 py-12"></div>
 
-// modal for adding product entry
 <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
   <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
     <div class="flex items-center justify-between p-4 border-b rounded-t">
@@ -93,6 +92,7 @@
     async function refreshProductEntries() {
       const productEntries = await getProductEntries();
       let htmlString = "";
+      
   
       if (productEntries.length === 0) {
         htmlString = `
@@ -102,6 +102,10 @@
         `;
       } else {
         productEntries.forEach(product => {
+            const description = DOMPurify.sanitize(product.fields.description);
+            const price = DOMPurify.sanitize(product.fields.price);
+            const quantity = DOMPurify.sanitize(product.fields.quantity);
+            const goldName = DOMPurify.sanitize(product.fields.gold_name);
           htmlString += `
             <div class="product-card bg-burgundy text-cream rounded-lg p-6 shadow-lg">
               <h3 class="text-lg font-bold">Gold Name: ${product.fields.gold_name}</h3>
